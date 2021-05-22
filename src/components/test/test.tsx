@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { createWordModelArray, randomWordGenerator } from '../../helpers/wordHelpers';
 import { useTimerManager } from '../../hooks/useTimerManager';
-import { useWordStore } from '../../hooks/useWordStore';
 import WordModel from '../../models/WordModel';
 import CurrentWords from './currentWords';
 import NextWords from './nextWords';
@@ -10,17 +9,17 @@ import WPM from './wpm';
 
 import styles from './test.module.css';
 import Stats from './stats';
+import { useTestContext } from '../../context/testContext';
 
 const Test = () => {
   const [wordIndex, setWordIndex] = useState(0);
   const [typed, setTyped] = useState('');  
   const [currentWordRow, setCurrentWordRow] = useState<WordModel[]>([]);
   const [nextWordRow, setNextWordRow] = useState<string[]>([]);
-  const [initialDuration, setInitialDuration] = useState(5);
   const [inputDisabled, setInputDisabled] = useState(false);
 
-  const { wordStore, addWordModel, clearWordStore } = useWordStore();
   const { startTimer, stopTimer, isTiming, timeRemaining, presetTime, timerFinished } = useTimerManager();
+  const context = useTestContext();
 
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -52,26 +51,27 @@ const Test = () => {
    * Logic needed before moving to the next letter
    */
   const beforeNextLetter = useCallback((word: string) => {
-    const currectWordModel = currentWordRow[wordIndex];
+    const currentWordModel = currentWordRow[wordIndex];
     validateWord(word);
     setTyped(word);
-    currectWordModel.TypedWord = word;
+    currentWordModel.TypedWord = word;
   }, [currentWordRow, validateWord, wordIndex]);
 
   /**
    * Logic needed before moving to the next word
    */
   const beforeNextWord = useCallback((word) => {
-    const currectWordModel = currentWordRow[wordIndex];
+    const currentWordModel = currentWordRow[wordIndex];
     setTyped('');
     validateWord(word.trim(), true);
-    addWordModel(currectWordModel);
     setWordIndex(wordIndex + 1);
+
+    context.AddCompletedWord(currentWordModel);
   
     if (wordIndex >= currentWordRow.length - 1) {
       shiftWordRow();
     }
-  }, [addWordModel, currentWordRow, shiftWordRow, validateWord, wordIndex]);
+  }, [context, currentWordRow, shiftWordRow, validateWord, wordIndex]);
 
   /**
    * Handles when the typed word changes
@@ -86,14 +86,14 @@ const Test = () => {
       return;
     };
 
-    startTimer(initialDuration);
+    startTimer(context.InitialDuration);
     
     if (lastTyped !== ' ') {
       beforeNextLetter(word);
     } else {
       beforeNextWord(word);
     }
-  }, [beforeNextLetter, beforeNextWord, initialDuration, startTimer, validateWord]);
+  }, [beforeNextLetter, beforeNextWord, context.InitialDuration, startTimer, validateWord]);
 
   /**
    * Returns settigs to original state so that the test can be run again
@@ -103,14 +103,15 @@ const Test = () => {
 
     setTyped('');
     shiftWordRow(true);
-    presetTime(initialDuration);
+    presetTime(context.InitialDuration);
     setInputDisabled(false);
-    clearWordStore();
+
+    context.Reset();
     
     setTimeout(() => {
       inputRef.current!.focus();
     }, 100);
-  }, [clearWordStore, initialDuration, presetTime, shiftWordRow, stopTimer]);
+  }, [context, presetTime, shiftWordRow, stopTimer]);
 
   /**
    * Disabled the input when the timer stops and has fully finished
@@ -137,20 +138,14 @@ const Test = () => {
       </div>
       <div className={styles.testControls}>
         <input value={typed} onChange={onChange} disabled={inputDisabled} ref={inputRef} 
-          className={[
-            styles.input, 
-            styles.box,
-            inputDisabled 
-              ? styles.inputDisabled 
-              : null
-          ].join(' ')} 
+          className={[styles.input, styles.box, inputDisabled ? styles.inputDisabled : null].join(' ')} 
         />
-        <WPM model={wordStore} lapsedTime={initialDuration - timeRemaining} />
+        <WPM timeRemaining={timeRemaining} />
         <TimeRemaining time={timeRemaining} />
         <div className={[styles.box, styles.resetButton].join(' ')} onClick={reset}>Reset</div>
       </div>
       {!isTiming && timerFinished && (
-        <Stats model={wordStore} duration={initialDuration} />
+        <Stats />
       )}
     </div>
   );

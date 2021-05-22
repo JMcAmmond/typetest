@@ -1,25 +1,18 @@
-import React, { useMemo } from 'react';
-import WordModel from '../../models/WordModel';
+import React from 'react';
+import { useTestContext } from '../../context/testContext';
 import styles from './test.module.css';
 
 interface IWPM {
-  model: WordModel[];
-  lapsedTime: number;
+  timeRemaining: number;
 }
 
-const WPM = ({ model, lapsedTime }: IWPM) => {
-  const wordsPerMinute = useMemo(() => {
-    const correctWordCount = model.reduce((total, word) => {
-      return word.IsCorrect ? total + 1 : total;
-    }, 0);
-
-    const wpm = (correctWordCount / lapsedTime) * 60;
-
-    return Math.round(wpm) || 0;
-  }, [lapsedTime, model]);
-
+const WPM = ({ timeRemaining }: IWPM) => {
+  const { WPM, InitialDuration } = useTestContext();
+  
   return (
-    <div className={styles.box}>{wordsPerMinute} <span className={styles.smallFont}>WPM</span></div>
+    <div className={styles.box}>
+      {WPM(InitialDuration - timeRemaining)} <span className={styles.smallFont}>WPM</span>
+    </div>
   )
 }
 
