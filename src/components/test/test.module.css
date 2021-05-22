@@ -1,0 +1,109 @@
+.wordsContainer {
+  background-color: #191919;
+  font-size: 1.6rem;
+  margin: auto;
+  position: relative;
+  overflow: hidden;
+  width: 50rem;
+  text-align: center;
+  border-radius: 4px;
+  line-height: 2.4rem;
+  height: 7.8rem;
+  padding: 1.5rem 2.25rem;
+
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.word {
+  position: relative;
+  z-index: 1;
+  padding: 0px 1px;
+  border-radius: 2px;
+  display: inline-block;
+  padding: 0 5px;
+}
+
+.active {
+  background-color: #373737;
+}
+
+.correct {
+  color: #80e766;
+}
+
+.incorrect {
+  color: #ee6060;
+}
+
+.input {
+  flex: 1;
+  border: 2px solid #2a2a2a;
+}
+
+.inputDisabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.box {
+  z-index: 1;
+  outline: 0;
+  transition: .2s;
+  padding: .75rem 1.25rem;
+  background-color: #191919;
+  color: inherit;
+  margin-top: 1rem;
+  font-size: 1.4rem;
+  border-radius: 4px;
+}
+
+.smallFont {
+  font-size: 1rem;
+}
+
+.testControls {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.testControls > * {
+  margin-right: 15px;
+}
+
+.resetButton {
+  cursor: pointer;
+  margin-right: 0;
+}
+
+.timer {
+  width: 6rem;
+  text-align: center;
+}
+
+.stats {
+  width: 35%;
+  margin-top: 3rem;
+}
+
+.stats h2 {
+  text-align: center;
+  font-weight: 700;
+  font-size: 2rem;
+  margin: 0 0 25px;
+}
+
+.table > * {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 10px 1rem;
+}
+
+.table > *:nth-child(odd) {
+  background-color: #191919;
+  border-radius: 3px;
+}
