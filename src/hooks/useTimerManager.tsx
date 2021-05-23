@@ -34,6 +34,7 @@ export const useTimerManager = () => {
 
   const stopTimer = useCallback(() => {
     setIsTiming(false);
+    setTimerFinished(false);
     clearInterval(timer!);
   }, [timer]);
 

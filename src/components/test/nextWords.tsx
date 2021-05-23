@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './test.module.css';
+import styles from './styles/test.module.css';
 
 interface INextWords {
   words: string[];

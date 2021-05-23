@@ -1,0 +1,11 @@
+.headerContainer {
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
+  font-size: 4rem;
+  text-align: center;
+  margin: 4rem;
+}
+
+.primaryColor {
+  font-family: 'Lato', Arial, Helvetica, sans-serif;
+  color: var(--primary);
+}

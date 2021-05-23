@@ -1,6 +1,6 @@
 import React from 'react';
 import { useTestContext } from '../../context/testContext';
-import styles from './test.module.css';
+import styles from './styles/test.module.css';
 
 const Stats = () => {
   const { WPM, RawWPM, Correct, Incorrect, Accuracy } = useTestContext();

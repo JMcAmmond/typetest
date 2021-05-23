@@ -1,6 +1,6 @@
 import React from 'react';
 import WordModel from '../../models/WordModel';
-import styles from './test.module.css';
+import styles from './styles/test.module.css';
 
 interface ICurrentWords {
   words: WordModel[];

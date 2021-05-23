@@ -1,8 +1,16 @@
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@600|700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@900&display=swap');
 
 :root {
+  --primary: #00a4e4;
+  --secondary: #00aaa6;
   --dark-1: #111;
   --light-1: #eee;
+  --correct: #80e766;
+  --incorrect: #ee6060;
+  --gray-1: #373737;
+  --gray-2: #2a2a2a;
+  --gray-3: #191919;
 }
 
 * {
@@ -17,4 +25,5 @@ html, body {
   width: 100vw;
   padding: 0;
   margin: 0;
+  overflow-y: hidden;
 }

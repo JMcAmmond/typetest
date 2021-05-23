@@ -3,7 +3,13 @@ import WordModel from "./WordModel";
 export default class TestModel {
   public CompletedWords: WordModel[];
 
-  public InitialDuration: number;
+  public Duration: number = 60;
+
+  public UseAdvanced: boolean = false;
+
+  public UseNumbers: boolean = false;
+
+  public UsePunctuation: boolean = false;
 
   public AddCompletedWord = (wordModel: WordModel) => {
     this.CompletedWords.push(wordModel);
@@ -21,16 +27,16 @@ export default class TestModel {
     }, 0);
   };
 
-  public WPM = (duration: number = this.InitialDuration) => {
+  public WPM = (duration: number = this.Duration) => {
     return Math.round((this.Correct() / duration) * 60) || 0;
   };
 
   public RawWPM = () => {
-    return Math.round((this.CompletedWords.length / this.InitialDuration) * 60) || 0;
+    return Math.round((this.CompletedWords.length / this.Duration) * 60) || 0;
   };
 
   public Accuracy = () => {
-    return (this.Correct() / this.CompletedWords.length) * 100 || 0;
+    return Math.round((this.Correct() / this.CompletedWords.length) * 100) || 0;
   };
 
   public Reset = () => {
@@ -39,6 +45,5 @@ export default class TestModel {
 
   public constructor() {
     this.CompletedWords = [];
-    this.InitialDuration = 5;
   }
 }

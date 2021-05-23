@@ -1,17 +1,22 @@
 import React from 'react';
 import { useTestContext } from '../../context/testContext';
-import styles from './test.module.css';
+import styles from './styles/test.module.css';
 
 interface IWPM {
   timeRemaining: number;
 }
 
 const WPM = ({ timeRemaining }: IWPM) => {
-  const { WPM, InitialDuration } = useTestContext();
+  const { WPM, Duration } = useTestContext();
   
   return (
     <div className={styles.box}>
-      {WPM(InitialDuration - timeRemaining)} <span className={styles.smallFont}>WPM</span>
+      <span>
+        {WPM(Duration - timeRemaining)}{' '}
+        <span className={styles.smallFont}>
+          WPM
+        </span>
+      </span>
     </div>
   )
 }

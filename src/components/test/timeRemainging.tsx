@@ -1,5 +1,5 @@
 import React, { useMemo } from 'react';
-import styles from './test.module.css';
+import styles from './styles/test.module.css';
 
 interface ITimeRemaining {
   time: number;
@@ -22,7 +22,9 @@ const TimeRemaining = ({ time }: ITimeRemaining) => {
   }, [time]);
 
   return (
-    <div className={[styles.box, styles.timer].join(' ')}>{minutes}:{seconds}</div>
+    <div className={[styles.box, styles.timer].join(' ')}>
+      {minutes}:{seconds}
+    </div>
   )
 }
 

@@ -7,9 +7,10 @@ import NextWords from './nextWords';
 import TimeRemaining from './timeRemainging';
 import WPM from './wpm';
 
-import styles from './test.module.css';
+import styles from './styles/test.module.css';
 import Stats from './stats';
 import { useTestContext } from '../../context/testContext';
+import Options from './options';
 
 const Test = () => {
   const [wordIndex, setWordIndex] = useState(0);
@@ -42,10 +43,16 @@ const Test = () => {
    * Shifts the next row into the current slot, generates new next word row and resets the index
    */
   const shiftWordRow = useCallback((firstTime = false) => {
-    setCurrentWordRow(createWordModelArray(firstTime ? randomWordGenerator() : nextWordRow));
-    setNextWordRow(randomWordGenerator());
+    const options = {
+      advanced: context.UseAdvanced,
+      punctuation: context.UsePunctuation,
+      numbers: context.UseNumbers
+    };
+
+    setCurrentWordRow(createWordModelArray(firstTime ? randomWordGenerator(options) : nextWordRow));
+    setNextWordRow(randomWordGenerator(options));
     setWordIndex(0);
-  }, [nextWordRow]);
+  }, [context.UseAdvanced, context.UseNumbers, context.UsePunctuation, nextWordRow]);
 
   /**
    * Logic needed before moving to the next letter
@@ -86,14 +93,14 @@ const Test = () => {
       return;
     };
 
-    startTimer(context.InitialDuration);
+    startTimer(context.Duration);
     
     if (lastTyped !== ' ') {
       beforeNextLetter(word);
     } else {
       beforeNextWord(word);
     }
-  }, [beforeNextLetter, beforeNextWord, context.InitialDuration, startTimer, validateWord]);
+  }, [beforeNextLetter, beforeNextWord, context.Duration, startTimer, validateWord]);
 
   /**
    * Returns settigs to original state so that the test can be run again
@@ -103,7 +110,7 @@ const Test = () => {
 
     setTyped('');
     shiftWordRow(true);
-    presetTime(context.InitialDuration);
+    presetTime(context.Duration);
     setInputDisabled(false);
 
     context.Reset();
@@ -131,7 +138,7 @@ const Test = () => {
   }, []);
 
   return (
-    <div>
+    <div className={styles.testContainer}>
       <div className={styles.wordsContainer}>
         <CurrentWords words={currentWordRow} wordIndex={wordIndex} />
         <NextWords words={nextWordRow} />
@@ -147,6 +154,7 @@ const Test = () => {
       {!isTiming && timerFinished && (
         <Stats />
       )}
+      <Options isTesting={isTiming} reset={reset} />
     </div>
   );
 }

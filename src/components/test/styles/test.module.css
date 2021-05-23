@@ -1,3 +1,10 @@
+.testContainer {
+  max-width: 50rem;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
+
 .wordsContainer {
   background-color: #191919;
   font-size: 1.6rem;
@@ -27,20 +34,20 @@
 }
 
 .active {
-  background-color: #373737;
+  background-color: var(--gray-1);
 }
 
 .correct {
-  color: #80e766;
+  color: var(--correct);
 }
 
 .incorrect {
-  color: #ee6060;
+  color: var(--incorrect);
 }
 
 .input {
   flex: 1;
-  border: 2px solid #2a2a2a;
+  border: 2px solid var(--gray-2);
 }
 
 .inputDisabled {
@@ -53,7 +60,7 @@
   outline: 0;
   transition: .2s;
   padding: .75rem 1.25rem;
-  background-color: #191919;
+  background-color: var(--gray-3);
   color: inherit;
   margin-top: 1rem;
   font-size: 1.4rem;
@@ -104,6 +111,6 @@
 }
 
 .table > *:nth-child(odd) {
-  background-color: #191919;
+  background-color: var(--gray-3);
   border-radius: 3px;
 }
