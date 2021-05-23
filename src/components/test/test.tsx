@@ -151,10 +151,10 @@ const Test = () => {
         <TimeRemaining time={timeRemaining} />
         <div className={[styles.box, styles.resetButton].join(' ')} onClick={reset}>Reset</div>
       </div>
-      {!isTiming && timerFinished && (
-        <Stats />
-      )}
-      <Options isTesting={isTiming} reset={reset} />
+      <div className={styles.statsOptionsContainer}>
+        <Stats isTiming={isTiming} hasFinished={timerFinished} />
+        <Options isTiming={isTiming} reset={reset} />
+      </div>
     </div>
   );
 }

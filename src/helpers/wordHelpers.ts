@@ -2,6 +2,22 @@ import WordModel from '../models/WordModel';
 import { SimpleList } from '../resources/wordList';
 import { AdvancedList } from '../resources/wordList'; 
 
+const shuffleArray = (array: any[]) => {
+  for (let i = array.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [array[i], array[j]] = [array[j], array[i]];
+  }
+}
+
+const getNumbersArray = (advanced: boolean) => {
+  const size = advanced ? 8425 : 123;
+  const splice = advanced ? 200 : 70;
+
+  let nums = Array.from({length: size}, (_, i) => i + 1 + "");
+  shuffleArray(nums);
+  return nums.splice(0, splice);
+}
+
 export const randomWordGenerator = ({
   advanced = false,
   punctuation = false,
@@ -12,10 +28,14 @@ export const randomWordGenerator = ({
   const words: string[] = [];
   let wordsLength = 0;
   let attempts = 0;
-  const list = [...SimpleList];
+  const list: any[] = [...SimpleList];
 
   if (advanced) {
     list.push(...AdvancedList);
+  }
+
+  if (numbers) {
+    list.push(...getNumbersArray(advanced));
   }
 
   while (wordsLength <= maxLength && attempts <= maxAttempts) {

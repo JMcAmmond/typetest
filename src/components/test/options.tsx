@@ -1,69 +1,79 @@
 import React, { useCallback } from 'react';
 import { useTestContext } from '../../context/testContext';
+import styles from './styles/test.module.css';
 
 interface IOptions {
-  isTesting: boolean;
+  isTiming: boolean;
   reset: () => void;
 }
 
-const Options = ({ isTesting, reset }: IOptions) => {
+const Options = ({ isTiming, reset }: IOptions) => {
   const context = useTestContext();
 
   const handleAdvancedChange = useCallback((e) => {
-    if (!isTesting) {
+    if (!isTiming) {
       context.UseAdvanced = e.target.value === 'true' ? true : false;
       reset();
     }
-  }, [context, isTesting, reset]);
+  }, [context, isTiming, reset]);
 
   const handleNumberChange = useCallback((e) => {
-    if (!isTesting) {
+    if (!isTiming) {
       context.UseNumbers = e.target.value === 'true' ? true : false;
       reset();
     }
-  }, [context, isTesting, reset]);
+  }, [context, isTiming, reset]);
 
   const handlePunctuationChange = useCallback((e) => {
-    if (!isTesting) {
+    if (!isTiming) {
       context.UsePunctuation = e.target.value === 'true' ? true : false;
       reset();
     }
-  }, [context, isTesting, reset]);
+  }, [context, isTiming, reset]);
 
   return (
-    <div>
-      <fieldset id="advanced">
-        <label>
-          <input type="radio" value="false" name="advan-Simple" onChange={handleAdvancedChange} checked={!context.UseAdvanced} />
-          Simple
-        </label>
-        <label>
-          <input type="radio" value="true" name="advan-Advanced" onChange={handleAdvancedChange} checked={context.UseAdvanced} />
-          Advanced
-        </label>
-      </fieldset>
+    <div className={styles.optionsContainer}>
+      <div className={styles.option}>
+        <span>Word List</span>
+        <div>
+          <label className={!context.UseAdvanced ? styles.activeOption : ''}>
+            <input type="radio" value="false" name="advan-Simple" onChange={handleAdvancedChange} checked={!context.UseAdvanced} />
+            Simple
+          </label>
+          <label className={context.UseAdvanced ? styles.activeOption : ''}>
+            <input type="radio" value="true" name="advan-Advanced" onChange={handleAdvancedChange} checked={context.UseAdvanced} />
+            Advanced
+          </label>
+        </div>
+      </div>
 
-      <fieldset id="numbers">
-        <label>
-          <input type="radio" value="false" name="num-No" onChange={handleNumberChange} checked={!context.UseNumbers} />
-          No
-        </label>
-        <label>
-          <input type="radio" value="true" name="num-Yes" onChange={handleNumberChange} checked={context.UseNumbers} />
-          Yes
-        </label>
-      </fieldset>
+      <div className={styles.option}>
+        <span>Numbers</span>
+        <div>
+          <label className={context.UseNumbers ? styles.activeOption : ''}>
+            <input type="radio" value="true" name="num-Yes" onChange={handleNumberChange} checked={context.UseNumbers} />
+            On
+          </label>
+          <label className={!context.UseNumbers ? styles.activeOption : ''}>
+            <input type="radio" value="false" name="num-No" onChange={handleNumberChange} checked={!context.UseNumbers} />
+            Off
+          </label>
+        </div>
+      </div>
 
-      <fieldset id="punctuation">
-        <label>
-          <input type="radio" value="false" name="punc-No" onChange={handlePunctuationChange} checked={!context.UsePunctuation} />
-          No
-        </label>
-        <label>
-          <input type="radio" value="true" name="punc-Yes" onChange={handlePunctuationChange} checked={context.UsePunctuation} />
-          Yes
-        </label>
-      </fieldset>
+      <div className={styles.option}>
+        <span>Punctuation</span>
+        <div>
+          <label className={context.UsePunctuation ? styles.activeOption : ''}>
+            <input type="radio" value="true" name="punc-Yes" onChange={handlePunctuationChange} checked={context.UsePunctuation} />          
+            On
+          </label>
+          <label className={!context.UsePunctuation ? styles.activeOption : ''}>
+            <input type="radio" value="false" name="punc-No" onChange={handlePunctuationChange} checked={!context.UsePunctuation} />
+            Off
+          </label>
+        </div>
+      </div>
     </div>
   )
 }

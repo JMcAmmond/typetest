@@ -93,7 +93,6 @@
 
 .stats {
   width: 35%;
-  margin-top: 3rem;
 }
 
 .stats h2 {
@@ -113,4 +112,42 @@
 .table > *:nth-child(odd) {
   background-color: var(--gray-3);
   border-radius: 3px;
+}
+
+.statsOptionsContainer {
+  margin-top: 3rem;
+  display: flex;
+  justify-content: center;
+}
+
+.optionsContainer {
+  flex: 0.90;
+  margin-left: 20px;
+  margin-left: 40px;
+  margin-top: 2rem;
+}
+
+.option {
+  display: flex;
+  padding: 12px 0;
+}
+
+.option > div {
+  display: inline-block;
+  margin-left: auto;
+}
+
+.option input {
+  display: none;
+}
+
+.option label {
+  padding: .2rem .6rem;
+  cursor: pointer;
+  min-width: 20px;
+}
+
+.activeOption {
+  background-color: var(--gray-1);
+  border-radius: 12px;
 }
