@@ -3,7 +3,7 @@ import WordModel from "./WordModel";
 export default class TestModel {
   public CompletedWords: WordModel[];
 
-  public Duration: number = 5;
+  public Duration: number = 60;
 
   public UseAdvanced: boolean = false;
 
