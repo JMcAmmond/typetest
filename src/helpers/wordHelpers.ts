@@ -45,6 +45,12 @@ export const randomWordGenerator = ({
     } else if (punctuation && isProperWord(word) && probability(.05)) {
       word = word + ',';
     }
+
+    if (punctuation && isProperWord(word) && probability(.05)) {
+      word = word
+        .toLowerCase()
+        .replace(/\b[a-z]/, (firstLetter: string) => firstLetter.toUpperCase());
+    }
     
     if (wordsLength + word.length <= maxLength) {
       wordsLength += word.length + 1;
