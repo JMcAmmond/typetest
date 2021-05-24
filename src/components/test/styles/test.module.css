@@ -124,12 +124,12 @@
   flex: 0.90;
   margin-left: 20px;
   margin-left: 40px;
-  margin-top: 2rem;
+  margin-top: auto;
 }
 
 .option {
   display: flex;
-  padding: 12px 0;
+  padding: 10px 0;
 }
 
 .option > div {

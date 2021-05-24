@@ -10,6 +10,13 @@ interface IOptions {
 const Options = ({ isTiming, reset }: IOptions) => {
   const context = useTestContext();
 
+  const handleDurationChange = useCallback((e) => {
+    if (!isTiming) {
+      context.Duration = Number(e.target.value);
+      reset();
+    }
+  }, [context, isTiming, reset]);
+
   const handleAdvancedChange = useCallback((e) => {
     if (!isTiming) {
       context.UseAdvanced = e.target.value === 'true' ? true : false;
@@ -33,6 +40,32 @@ const Options = ({ isTiming, reset }: IOptions) => {
 
   return (
     <div className={styles.optionsContainer}>
+      <div className={styles.option}>
+        <span>Duration</span>
+        <div>
+          <label className={context.Duration === 10 ? styles.activeOption : ''}>
+            <input type="radio" value="10" name="dur-1" onChange={handleDurationChange} checked={context.Duration === 10} />
+            0:10
+          </label>
+          <label className={context.Duration === 30 ? styles.activeOption : ''}>
+            <input type="radio" value="30" name="dur-2" onChange={handleDurationChange} checked={context.Duration === 30} />
+            0:30
+          </label>
+          <label className={context.Duration === 60 ? styles.activeOption : ''}>
+            <input type="radio" value="60" name="dur-3" onChange={handleDurationChange} checked={context.Duration === 60} />
+            1:00
+          </label>
+          <label className={context.Duration === 120 ? styles.activeOption : ''}>
+            <input type="radio" value="120" name="dur-4" onChange={handleDurationChange} checked={context.Duration === 120} />
+            2:00
+          </label>
+          <label className={context.Duration === 300 ? styles.activeOption : ''}>
+            <input type="radio" value="300" name="dur-5" onChange={handleDurationChange} checked={context.Duration === 300} />
+            5:00
+          </label>
+        </div>
+      </div>
+
       <div className={styles.option}>
         <span>Word List</span>
         <div>
