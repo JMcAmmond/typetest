@@ -11,29 +11,29 @@ const Stats = ({ isTiming, hasFinished }: IStats) => {
   const { WPM, RawWPM, Correct, Incorrect, Accuracy } = useTestContext();
 
   const wpm = useMemo(() => {
-    if (isTiming) return '0';
+    if (isTiming || !hasFinished) return '0';
     return WPM();
-  }, [WPM, isTiming]);
+  }, [WPM, hasFinished, isTiming]);
 
   const raw = useMemo(() => {
-    if (isTiming) return '-';
+    if (isTiming || !hasFinished) return '-';
     return RawWPM();
-  }, [RawWPM, isTiming]);
+  }, [RawWPM, hasFinished, isTiming]);
 
   const acc = useMemo(() => {
-    if (isTiming) return '-';
+    if (isTiming || !hasFinished) return '-';
     return Accuracy() + '%';
-  }, [Accuracy, isTiming]);
+  }, [Accuracy, hasFinished, isTiming]);
 
   const corr = useMemo(() => {
-    if (isTiming) return '-';
+    if (isTiming || !hasFinished) return '-';
     return Correct();
-  }, [Correct, isTiming]);
+  }, [Correct, hasFinished, isTiming]);
 
   const incorr = useMemo(() => {
-    if (isTiming) return '-';
+    if (isTiming || !hasFinished) return '-';
     return Incorrect();
-  }, [Incorrect, isTiming]);
+  }, [Incorrect, hasFinished, isTiming]);
 
   return (
     <div className={styles.stats}>

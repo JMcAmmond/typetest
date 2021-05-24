@@ -53,7 +53,7 @@ export const randomWordGenerator = ({
     const randomInt = Math.floor(Math.random() * list.length);
     let word = list[randomInt];
 
-    if (punctuation && probability(.05) && words[words.length - 1] !== '-') {
+    if (punctuation && probability(.05) && words[words.length - 1] !== '-' && words.length !== 0) {
       word = '-';
     } else if (punctuation && isProperWord(word) && probability(.1)) {
       word = '"' + word + '"';
