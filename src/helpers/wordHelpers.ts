@@ -13,6 +13,32 @@ const isProperWord = (word: any) => {
   return true;
 }
 
+const addPunctuation = (word: any, previousWord: string) => {
+  let toReturn = word;
+  
+  if ((previousWord !== '-' && previousWord !== null) && probability(.15)) {
+    toReturn = '-';
+  } else if (isProperWord(word) && probability(.15)) {
+    toReturn = '"' + word + '"';
+  } else if (isProperWord(word) && probability(.2)) {
+    toReturn = word + ';';
+  } else if (isProperWord(word) && probability(.2)) {
+    toReturn = word + ',';
+  } else if (isProperWord(word) && probability(.2)) {
+    toReturn = word + '?';
+  } else if (!isNaN(word) && probability(.1)) {
+    toReturn = word + '%';
+  }
+
+  if (isProperWord(word) && probability(.25)) {
+    toReturn = word
+      .toLowerCase()
+      .replace(/\b[a-z]/, (firstLetter: string) => firstLetter.toUpperCase());
+  }
+
+  return toReturn;
+}
+
 export const randomWordGenerator = ({
   advanced = false,
   punctuation = false,
@@ -36,20 +62,10 @@ export const randomWordGenerator = ({
     if (numbers && probability(.05)) {
       const size = advanced ? 8425 : 123;
       word = Math.floor(Math.random() * size) + '';
-    } else if (punctuation && probability(.05) && words[words.length - 1] !== '-' && words.length !== 0) {
-      word = '-';
-    } else if (punctuation && isProperWord(word) && probability(.1)) {
-      word = '"' + word + '"';
-    } else if (punctuation && isProperWord(word) && probability(.05)) {
-      word = word + ';';
-    } else if (punctuation && isProperWord(word) && probability(.05)) {
-      word = word + ',';
     }
-
-    if (punctuation && isProperWord(word) && probability(.05)) {
-      word = word
-        .toLowerCase()
-        .replace(/\b[a-z]/, (firstLetter: string) => firstLetter.toUpperCase());
+    
+    if (punctuation && probability(.25)) {
+      word = addPunctuation(word, words[words.length - 1]);
     }
     
     if (wordsLength + word.length <= maxLength) {
